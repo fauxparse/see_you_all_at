@@ -7,9 +7,10 @@ class ApplicationController < ActionController::Base
 
   def ensure_signup_complete
     return if action_name == "finish_signup"
+    redirect_to finish_signup_path(current_user) if awaiting_email_confirmation?
+  end
 
-    if current_user && current_user.requires_email_address?
-      redirect_to finish_signup_path(current_user)
-    end
+  def awaiting_email_confirmation?
+    current_user && current_user.requires_email_address?
   end
 end

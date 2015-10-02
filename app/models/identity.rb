@@ -3,7 +3,7 @@ class Identity < ActiveRecord::Base
 
   belongs_to :user
   validates :uid, :provider,
-    presence: { allow_blank: false}
+    presence: { allow_blank: false }
   validates :uid,
     uniqueness: { scope: :provider }
 

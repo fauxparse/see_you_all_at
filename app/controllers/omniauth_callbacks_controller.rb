@@ -1,13 +1,16 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  private
+
+  # rubocop:disable Metrics/MethodLength
   def self.provides_callback_for(provider)
-    class_eval %Q{
+    class_eval %{
       def #{provider}
-        @user = FindUserForOauth.new(env["omniauth.auth"], current_user).call.user
-        # @user = User.find_for_oauth(env["omniauth.auth"], current_user)
+        service = FindUserForOauth.new(env["omniauth.auth"], current_user)
+        @user = service.call.user
 
         if @user.persisted?
-          sign_in_and_redirect @user, event: :authentication
-          set_flash_message(:notice, :success, kind: "#{provider}".capitalize) if is_navigational_format?
+          sign_in_and_redirect(@user, event: :authentication)
+          provider_success_message("#{provider}") if is_navigational_format?
         else
           session["devise.#{provider}_data"] = env["omniauth.auth"]
           redirect_to new_user_registration_url
@@ -15,6 +18,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       end
     }
   end
+  # rubocop:enable Metrics/MethodLength
 
   [:twitter, :facebook, :google_oauth2].each do |provider|
     provides_callback_for provider
@@ -26,5 +30,9 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     else
       finish_signup_path(resource)
     end
+  end
+
+  def provider_success_message(provider)
+    set_flash_message(:notice, :success, kind: "#{provider}".capitalize)
   end
 end

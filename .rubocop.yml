@@ -1,0 +1,53 @@
+inherit_from: .rubocop_todo.yml
+AllCops:
+  RunRailsCops: true
+  Exclude:
+   - 'bin/*'
+   - 'script/*'
+   - 'config/**/*'
+   - 'lib/tasks/*'
+   - 'spec/spec_helper.rb'
+   - 'db/**/*'
+   - 'vendor/bundle/**/*'
+   - 'Gemfile'
+   - 'Guardfile'
+   - 'Rakefile'
+
+Style/AlignHash:
+  Enabled: false
+
+Style/AlignParameters:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/RegexpLiteral:
+  AllowInnerSlashes: true
+
+Style/SingleSpaceBeforeFirstArg:
+  Exclude:
+    - 'db/migrate/*'
+
+Lint/AmbiguousRegexpLiteral:
+  Exclude:
+    - 'features/step_definitions/*.rb'
+
+Metrics/MethodLength:
+  Exclude:
+    - 'db/migrate/*'
+
+Metrics/LineLength:
+  Exclude:
+    - 'features/step_definitions/*'
+    - 'config/initializers/devise.rb'
+    - 'features/support/env.rb'
+    - 'spec/rails_helper.rb'
+
+Metrics/AbcSize:
+  Max: 20
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+  Exclude:
+    - 'spec/rails_helper.rb'

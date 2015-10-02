@@ -17,10 +17,10 @@ class User < ActiveRecord::Base
   validates :name,
     presence: { allow_blank: false }
   validates :email, on: :update,
-    format: { :without => TEMP_EMAIL_REGEX }
+    format: { without: TEMP_EMAIL_REGEX }
 
   def email_verified?
-    self.email && self.email !~ TEMP_EMAIL_REGEX
+    email? && email !~ TEMP_EMAIL_REGEX
   end
 
   def requires_email_address?

@@ -1,13 +1,14 @@
 Rails.application.routes.draw do
   devise_for :users,
-    :controllers => {
+    controllers: {
       omniauth_callbacks: "omniauth_callbacks",
-      registrations: "user_registrations"
+      registrations:      "user_registrations"
     }
 
   authenticate :user do
     resources :users
-    match "/users/:id/finish_signup" => "users#finish_signup", via: [:get, :patch], :as => :finish_signup
+    match "/users/:id/finish_signup" => "users#finish_signup",
+      via: [:get, :patch], :as => :finish_signup
   end
 
   root to: "events#index"

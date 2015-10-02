@@ -33,14 +33,14 @@ class FindUserForOauth
   end
 
   def find_user(email)
-    User.where(:email => email).first if email
+    User.find_by(email: email) if email
   end
 
   def create_user(email)
     new_user = User.new(
-      name: auth.extra.raw_info.name,
-      email: email || temporary_email,
-      password: Devise.friendly_token[0,20]
+      name:     auth.extra.raw_info.name,
+      email:    email || temporary_email,
+      password: Devise.friendly_token[0, 20]
     )
     new_user.skip_confirmation!
     new_user.save!
