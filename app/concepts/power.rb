@@ -6,10 +6,13 @@ class Power
   end
 
   power :users do
-    User.where(id: @user.id)
+    @user.admin? && User || User.where(id: @user.id)
   end
 
-  power(:creatable_users) { nil }
+  power(:creatable_users) do
+    @user.admin? && User || nil
+  end
+
   power(:updatable_users) { users }
   power(:destroyable_users) { nil }
 end

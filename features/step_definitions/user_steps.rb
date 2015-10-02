@@ -9,3 +9,7 @@ end
 When(/^I visit their profile$/) do
   visit(user_path(@another_user))
 end
+
+Then(/^I should see their name$/) do
+  expect(page).to have_content(@another_user.name)
+end

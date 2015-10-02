@@ -8,6 +8,13 @@ When(/^I am an existing user$/) do
   @user.save!
 end
 
+When(/^I am an admin user$/) do
+  step("I am a new user")
+  @user.admin = true
+  @user.skip_confirmation!
+  @user.save!
+end
+
 When(/^I visit the home page$/) do
   visit(root_path)
 end
@@ -46,6 +53,11 @@ end
 
 When(/^I am logged in$/) do
   step("I am an existing user")
+  step("I log in")
+end
+
+When(/^I am logged in as an admin$/) do
+  step("I am an admin user")
   step("I log in")
 end
 

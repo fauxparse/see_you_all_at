@@ -13,3 +13,9 @@ Feature: View profile
       And another user exists
      When I visit their profile
      Then I should not be allowed access
+
+  Scenario: View someone else's profile
+    Given I am logged in as an admin
+      And another user exists
+     When I visit their profile
+     Then I should see their name
