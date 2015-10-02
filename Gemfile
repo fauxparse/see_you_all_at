@@ -28,6 +28,15 @@ gem 'haml'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
+
+gem 'figaro'
+gem 'colorize'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
@@ -40,6 +49,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'cucumber-rails', require: false
+  gem 'email_spec'
 end
 
 group :development do
@@ -49,12 +59,19 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 
+  gem 'guard-rails'
+  gem 'guard-bundler'
   gem 'guard-rspec'
   gem 'guard-cucumber'
+  gem 'letter_opener'
 end
 
 group :test do
   gem 'shoulda-matchers'
   gem 'rspec-collection_matchers'
   gem 'database_cleaner'
+end
+
+group :production do
+  gem 'rails_12factor'
 end
