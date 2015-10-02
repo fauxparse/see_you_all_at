@@ -22,7 +22,10 @@ module SeeYouAllAt
     # -- all .rb files in that directory are automatically loaded.
 
     %w(serializers presenters forms concepts validators services).each do |dir|
-      config.autoload_paths << Rails.root.join("app", dir)
+      config.autoload_paths << Rails.root.join('app', dir)
+      Dir[Rails.root.join('app', dir, '**/*')].each do |d|
+        config.autoload_paths << d if File.directory?(d)
+      end
     end
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
