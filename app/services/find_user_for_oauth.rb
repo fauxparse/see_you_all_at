@@ -40,7 +40,8 @@ class FindUserForOauth
     new_user = User.new(
       name:     auth.extra.raw_info.name,
       email:    email || temporary_email,
-      password: Devise.friendly_token[0, 20]
+      password: Devise.friendly_token[0, 20],
+      avatar:   auth.info.image
     )
     new_user.skip_confirmation!
     new_user.save!
