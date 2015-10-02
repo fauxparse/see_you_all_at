@@ -1,7 +1,6 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   private
 
-  # rubocop:disable Metrics/MethodLength
   def self.provides_callback_for(provider)
     class_eval %{
       def #{provider}
@@ -18,7 +17,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       end
     }
   end
-  # rubocop:enable Metrics/MethodLength
 
   [:twitter, :facebook, :google_oauth2].each do |provider|
     provides_callback_for provider

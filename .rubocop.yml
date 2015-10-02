@@ -34,6 +34,7 @@ Lint/AmbiguousRegexpLiteral:
     - 'features/step_definitions/*.rb'
 
 Metrics/MethodLength:
+  Max: 15
   Exclude:
     - 'db/migrate/*'
 

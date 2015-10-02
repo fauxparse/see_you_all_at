@@ -44,6 +44,11 @@ When(/^I log in$/) do
   click_button("Log in")
 end
 
+When(/^I am logged in$/) do
+  step("I am an existing user")
+  step("I log in")
+end
+
 Then(/^I should be on the home page$/) do
   expect(page.current_path).to eq(root_path)
 end

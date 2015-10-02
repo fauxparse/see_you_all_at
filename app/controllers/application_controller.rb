@@ -3,7 +3,17 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  include Consul::Controller
+
   private
+
+  current_power do
+    Power.new(current_user)
+  end
+
+  rescue_from Consul::Powerless do |exception|
+    render(text: exception.message, status: :forbidden)
+  end
 
   def ensure_signup_complete
     return if action_name == "finish_signup"
