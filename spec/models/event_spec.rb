@@ -34,7 +34,7 @@ RSpec.describe Event, type: :model do
   end
 
   context "#to_param" do
-    subject { event.slug }
+    subject { event.to_param }
 
     it { is_expected.to eq("my-fancy-party") }
   end

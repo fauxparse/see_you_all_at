@@ -493,11 +493,11 @@
         null,
         null,
         1,
-        2,
+        0,
         null,
         null,
         1,
-        2,
+        0,
         null,
         null
       ],
@@ -534,8 +534,36 @@
         0,
         null,
         null
+      ],
+      "/Users/matt/code/see_you_all_at/app/models/event.rb": [
+        1,
+        1,
+        1,
+        null,
+        1,
+        null,
+        null,
+        1,
+        null,
+        1,
+        1,
+        null,
+        null,
+        1,
+        null,
+        1,
+        7,
+        null,
+        null,
+        1,
+        9,
+        9,
+        9,
+        null,
+        null,
+        null
       ]
     },
-    "timestamp": 1443954867
+    "timestamp": 1443955021
   }
 }

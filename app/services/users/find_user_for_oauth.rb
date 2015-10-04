@@ -12,7 +12,7 @@ class FindUserForOauth
   end
 
   def identity
-    @identity ||= Identity.find_for_oauth(auth)
+    @identity ||= Identity.oauth(auth.provider, auth.uid).first_or_create!
   end
 
   def user
