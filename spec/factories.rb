@@ -15,4 +15,9 @@ FactoryGirl.define do
     starts_on "2015-04-01"
     ends_on "2015-04-04"
   end
+
+  factory :administrator do
+    user
+    event
+  end
 end

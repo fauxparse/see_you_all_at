@@ -1,4 +1,7 @@
 class Event < ActiveRecord::Base
+  has_many :administrators, inverse_of: :event, dependent: :destroy,
+    autosave: true
+
   before_validation :generate_slug, if: :name?
   before_validation :update_times
 

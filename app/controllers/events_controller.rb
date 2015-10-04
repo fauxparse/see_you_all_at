@@ -16,20 +16,12 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = Event.new(event_params)
-    current_power.creatable_event!(@event)
+    create_event = CreateEvent.new(current_user, event_params)
+    create_event.call
+    respond_with_success(create_event)
 
-    respond_to do |format|
-      if @event.save
-        format.html { redirect_to(@event) }
-        format.json { render(json: @event) }
-      else
-        format.html { render(action: "new") }
-        format.json do
-          render(json: @event.errors, status: :unprocessable_entity)
-        end
-      end
-    end
+  rescue ActiveRecord::RecordInvalid
+    respond_with_failure(create_event)
   end
 
   private
@@ -40,5 +32,21 @@ class EventsController < ApplicationController
 
   def load_event
     @event ||= events.find_by(slug: params[:id])
+  end
+
+  def respond_with_success(service)
+    respond_to do |format|
+      format.html { redirect_to(service.event) }
+      format.json { render(json: service.event) }
+    end
+  end
+
+  def respond_with_failure(service)
+    respond_to do |format|
+      @event = service.event
+
+      format.html { render(action: @event.new_record? ? "new" : "edit") }
+      format.json { render(json: @event.errors, status: :unprocessable_entity) }
+    end
   end
 end

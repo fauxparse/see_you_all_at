@@ -25,6 +25,6 @@ class Power
   power(:destroyable_events) { events }
 
   power :assignable_event_fields do
-    [:name, :starts_on, :ends_on]
+    [:name, :slug, :starts_on, :ends_on]
   end
 end

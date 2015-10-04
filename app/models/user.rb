@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   TEMP_EMAIL_REGEX = /\Achange@me/
 
   has_many :identities, inverse_of: :user, dependent: :destroy
+  has_many :administrators, inverse_of: :user, dependent: :destroy
 
   devise(
     :database_authenticatable,

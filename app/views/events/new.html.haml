@@ -1,4 +1,6 @@
 = form_for @event do |form|
+  = @event.errors.inspect
+
   = form.label(:name)
   = form.text_field(:name)
   = inline_errors_for(@event, :name)
