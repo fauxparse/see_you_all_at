@@ -32,4 +32,10 @@ RSpec.describe Event, type: :model do
       it { is_expected.to eq(Time.utc(2015, 12, 31, 11)) }
     end
   end
+
+  context "#to_param" do
+    subject { event.slug }
+
+    it { is_expected.to eq("my-fancy-party") }
+  end
 end

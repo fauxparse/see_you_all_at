@@ -8,6 +8,8 @@ engines:
   eslint:
     enabled: true
   csslint:
+    enabled: false
+  scss-lint:
     enabled: true
 
 ratings:

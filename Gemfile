@@ -74,6 +74,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'rspec-collection_matchers'
   gem 'database_cleaner'
+  gem 'codeclimate-test-reporter', require: nil
 end
 
 group :production do
