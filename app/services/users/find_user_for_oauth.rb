@@ -4,7 +4,6 @@ class FindUserForOauth
   def initialize(auth, signed_in_resource = nil)
     @auth = auth
     @signed_in_resource = signed_in_resource
-    Rails.logger.info auth.inspect.green
   end
 
   def call
