@@ -37,6 +37,8 @@ gem 'consul'
 gem 'figaro'
 gem 'colorize'
 
+gem 'stringex'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

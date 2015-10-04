@@ -1,14 +1,27 @@
-When(/^I am a new user$/) do
+Given(/^I am not logged in$/) do
+end
+
+Given(/^I am logged in$/) do
+  step("I am an existing user")
+  step("I log in")
+end
+
+Given(/^I am logged in as an admin$/) do
+  step("I am an admin user")
+  step("I log in")
+end
+
+Given(/^I am a new user$/) do
   @user = FactoryGirl.build(:user, name: "Hermione Granger", email: "hermione@hogwarts.ac.uk")
 end
 
-When(/^I am an existing user$/) do
+Given(/^I am an existing user$/) do
   step("I am a new user")
   @user.skip_confirmation!
   @user.save!
 end
 
-When(/^I am an admin user$/) do
+Given(/^I am an admin user$/) do
   step("I am a new user")
   @user.admin = true
   @user.skip_confirmation!
@@ -51,16 +64,6 @@ When(/^I log in$/) do
   click_button("Log in")
 end
 
-When(/^I am logged in$/) do
-  step("I am an existing user")
-  step("I log in")
-end
-
-When(/^I am logged in as an admin$/) do
-  step("I am an admin user")
-  step("I log in")
-end
-
 Then(/^I should be on the home page$/) do
   expect(page.current_path).to eq(root_path)
 end
@@ -71,6 +74,10 @@ end
 
 Then(/^I should be on the login page$/) do
   expect(page.current_path).to eq(new_user_session_path)
+end
+
+Then(/^I should be prompted to log in$/) do
+  step("I should be on the login page")
 end
 
 Then(/^I should be on the password recovery page$/) do

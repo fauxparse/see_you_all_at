@@ -11,10 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151002220512) do
+ActiveRecord::Schema.define(version: 20151004001313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "events", force: :cascade do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.datetime "starts_at"
+    t.datetime "stops_at"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.date     "starts_on"
+    t.date     "ends_on"
+    t.string   "time_zone",  default: "Wellington"
+  end
+
+  add_index "events", ["slug"], name: "index_events_on_slug", unique: true, using: :btree
+  add_index "events", ["starts_at", "stops_at"], name: "index_events_on_starts_at_and_stops_at", using: :btree
 
   create_table "identities", force: :cascade do |t|
     t.integer  "user_id"

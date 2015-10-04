@@ -15,4 +15,16 @@ class Power
 
   power(:updatable_users) { users }
   power(:destroyable_users) { nil }
+
+  power :events do
+    Event
+  end
+
+  power(:creatable_events) { @user.presence && events }
+  power(:updatable_events) { events }
+  power(:destroyable_events) { events }
+
+  power :assignable_event_fields do
+    [:name, :starts_on, :ends_on]
+  end
 end

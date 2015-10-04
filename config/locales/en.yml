@@ -1,3 +1,14 @@
 en:
+  activerecord:
+    attributes:
+      event:
+        slug: URL
+        starts_on: Start date
+        ends_on: End date
+
   profile:
     updated: "Your profile was updated"
+
+  events:
+    new:
+      create: "Create event"

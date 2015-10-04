@@ -1,0 +1,18 @@
+= form_for @event do |form|
+  = form.label(:name)
+  = form.text_field(:name)
+  = inline_errors_for(@event, :name)
+
+  = form.label(:slug)
+  = form.text_field(:slug)
+  = inline_errors_for(@event, :slug)
+
+  = form.label(:starts_on)
+  = form.date_field(:starts_on)
+  = inline_errors_for(@event, :starts_on)
+
+  = form.label(:ends_on)
+  = form.date_field(:ends_on)
+  = inline_errors_for(@event, :ends_on)
+
+  = button_tag t(".create"), type: :submit
