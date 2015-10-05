@@ -16,12 +16,16 @@ class EventsController < ApplicationController
   end
 
   def create
-    create_event = CreateEvent.new(current_user, event_params)
-    create_event.call
-    respond_with_success(create_event)
+    create_or_update_event(CreateEvent.new(current_user, event_params))
+  end
 
-  rescue ActiveRecord::RecordInvalid
-    respond_with_failure(create_event)
+  def edit
+    current_power.updatable_event!(@event)
+  end
+
+  def update
+    current_power.updatable_event!(@event)
+    create_or_update_event(UpdateEvent.new(@event, event_params))
   end
 
   private
@@ -34,9 +38,16 @@ class EventsController < ApplicationController
     @event ||= events.find_by(slug: params[:id])
   end
 
+  def create_or_update_event(service)
+    service.call
+    respond_with_success(service)
+  rescue ActiveRecord::RecordInvalid
+    respond_with_failure(service)
+  end
+
   def respond_with_success(service)
     respond_to do |format|
-      format.html { redirect_to(service.event) }
+      format.html { redirect_to(edit_event_path(service.event)) }
       format.json { render(json: service.event) }
     end
   end

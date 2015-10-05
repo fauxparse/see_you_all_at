@@ -21,8 +21,10 @@ class Power
   end
 
   power(:creatable_events) { @user.presence && events }
-  power(:updatable_events) { events }
-  power(:destroyable_events) { events }
+  power(:updatable_events) do
+    @user.admin? && events || events.administered_by(@user)
+  end
+  power(:destroyable_events) { updatable_events }
 
   power :assignable_event_fields do
     [:name, :slug, :starts_on, :ends_on]

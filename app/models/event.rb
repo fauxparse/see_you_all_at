@@ -14,6 +14,10 @@ class Event < ActiveRecord::Base
     slug
   end
 
+  def self.administered_by(user)
+    joins(:administrators).where(administrators: { user_id: user.id })
+  end
+
   private
 
   def generate_slug

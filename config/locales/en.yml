@@ -10,5 +10,6 @@ en:
     updated: "Your profile was updated"
 
   events:
-    new:
+    form:
       create: "Create event"
+      save: "Save settings"

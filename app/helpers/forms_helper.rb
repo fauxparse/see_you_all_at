@@ -3,6 +3,11 @@ module FormsHelper
     error_messages_for(instance, field).join
   end
 
+  def save_button(form)
+    action = form.object.new_record? ? "create" : "save"
+    button_tag(t(".#{action}"), type: :submit)
+  end
+
   private
 
   def error_messages_for(instance, field)
