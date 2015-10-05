@@ -38,4 +38,19 @@ RSpec.describe Event, type: :model do
 
     it { is_expected.to eq("my-fancy-party") }
   end
+
+  context "::administered_by" do
+    subject { Event.administered_by(user) }
+    let(:user) { FactoryGirl.create(:user) }
+
+    context "when the user is not an administrator" do
+      it { is_expected.not_to include(event) }
+    end
+
+    context "when the user is an administrator" do
+      before { Administrator.create(user: user, event: event) }
+
+      it { is_expected.to include(event) }
+    end
+  end
 end
