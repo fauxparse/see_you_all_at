@@ -14,6 +14,7 @@ class CreateEvent
 
     Event.transaction do
       @event.administrators.build(user: @user) if user.present?
+      @event.packages.build(name: I18n.t("packages.new.default", position: 0))
       @event.save!
     end
   end

@@ -13,3 +13,7 @@ en:
     form:
       create: "Create event"
       save: "Save settings"
+
+  packages:
+    new:
+      default: "Basic"

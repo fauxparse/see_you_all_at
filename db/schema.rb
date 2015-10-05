@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151004222231) do
+ActiveRecord::Schema.define(version: 20151005024606) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,18 @@ ActiveRecord::Schema.define(version: 20151004222231) do
 
   add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
 
+  create_table "packages", force: :cascade do |t|
+    t.integer  "event_id"
+    t.string   "name"
+    t.string   "slug"
+    t.integer  "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "packages", ["event_id", "id"], name: "index_packages_on_event_id_and_id", unique: true, using: :btree
+  add_index "packages", ["event_id", "slug"], name: "index_packages_on_event_id_and_slug", unique: true, using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email",                  default: "",    null: false
@@ -76,4 +88,5 @@ ActiveRecord::Schema.define(version: 20151004222231) do
   add_foreign_key "administrators", "events", on_delete: :cascade
   add_foreign_key "administrators", "users", on_delete: :cascade
   add_foreign_key "identities", "users", on_delete: :cascade
+  add_foreign_key "packages", "events", on_delete: :cascade
 end

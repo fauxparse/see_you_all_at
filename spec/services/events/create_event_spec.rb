@@ -21,6 +21,11 @@ describe CreateEvent do
     expect(Administrator.last.user).to eq(user)
   end
 
+  it "creates a default package" do
+    expect { subject }.to change { Package.count }.by(1)
+    expect(Package.last.name).to eq("Basic")
+  end
+
   context "without an event name" do
     let(:params) { FactoryGirl.attributes_for(:event).except(:name) }
 

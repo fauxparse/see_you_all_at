@@ -2,6 +2,7 @@ FactoryGirl.define do
   sequence(:name) { |n| "User #{n}" }
   sequence(:email) { |n| "user_#{n}@example.com" }
   sequence(:event_name) { |n| "Event #{n}" }
+  sequence(:package_name) { |n| "Package #{n}" }
 
   factory :user do
     name
@@ -19,5 +20,10 @@ FactoryGirl.define do
   factory :administrator do
     user
     event
+  end
+
+  factory :package do
+    event
+    name { generate(:package_name) }
   end
 end
