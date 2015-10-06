@@ -44,6 +44,9 @@ GEM
     bcrypt (3.1.10)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bourbon (4.2.4)
+      sass (~> 3.4)
+      thor (~> 0.19)
     builder (3.2.2)
     byebug (6.0.2)
     capybara (2.5.0)
@@ -174,6 +177,9 @@ GEM
     multi_test (0.1.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
+    neat (1.7.2)
+      bourbon (>= 4.0)
+      sass (>= 3.3)
     nenv (0.2.0)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
@@ -335,6 +341,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt (~> 3.1.7)
+  bourbon
   byebug
   codeclimate-test-reporter
   coffee-rails (~> 4.1.0)
@@ -355,6 +362,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   letter_opener
+  neat
   omniauth
   omniauth-facebook
   omniauth-google-oauth2

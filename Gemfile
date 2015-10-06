@@ -39,6 +39,9 @@ gem 'colorize'
 
 gem 'stringex'
 
+gem 'bourbon'
+gem 'neat'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
