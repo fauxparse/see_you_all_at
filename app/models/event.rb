@@ -4,6 +4,7 @@ class Event < ActiveRecord::Base
   has_many :administrators, inverse_of: :event, dependent: :destroy,
     autosave: true
   has_many :packages, inverse_of: :event, dependent: :destroy, autosave: true
+  has_many :registrations, inverse_of: :event, dependent: :destroy
 
   before_validation :update_times
 

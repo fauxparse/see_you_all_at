@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
 
   include Consul::Controller
 
+  add_flash_types :success, :error
+
   private
 
   current_power do
@@ -22,5 +24,13 @@ class ApplicationController < ActionController::Base
 
   def awaiting_email_confirmation?
     current_user && current_user.requires_email_address?
+  end
+
+  def load_event
+    @event ||= event_scope.find_by(slug: params[:event_id])
+  end
+
+  def event_scope
+    Event
   end
 end

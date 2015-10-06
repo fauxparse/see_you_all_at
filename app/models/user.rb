@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 
   has_many :identities, inverse_of: :user, dependent: :destroy
   has_many :administrators, inverse_of: :user, dependent: :destroy
+  has_many :registrations, inverse_of: :user, dependent: :destroy
 
   devise(
     :database_authenticatable,

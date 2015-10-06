@@ -1,0 +1,10 @@
+%h1= t(".heading")
+
+= form_for(@registration_form, as: :registration, url: @registration_form.registration_path) do |form|
+  %ul
+    - @event.packages.each do |package|
+      %li
+        = form.radio_button(:package_slug, package.to_param)
+        = package.name
+
+  = button_tag(t(".continue"), type: :submit)

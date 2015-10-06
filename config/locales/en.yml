@@ -13,7 +13,25 @@ en:
     form:
       create: "Create event"
       save: "Save settings"
+    show:
+      register: "Register now"
 
   packages:
     new:
       default: "Basic"
+
+  registrations:
+    new:
+      heading: "Register for %{event}"
+      continue: "Continue"
+    select_package:
+      heading: "Select package"
+      continue: "Continue"
+    thanks:
+      heading: "Thanks!"
+      body: "You have registered for %{event}."
+
+  devise:
+    sessions:
+      new:
+        login: "Log in"

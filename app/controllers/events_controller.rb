@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :load_event, only: [:show, :edit, :update, :destroy]
 
   require_power_check

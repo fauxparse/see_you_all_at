@@ -26,4 +26,9 @@ FactoryGirl.define do
     event
     name { generate(:package_name) }
   end
+
+  factory :registration do
+    user
+    package
+  end
 end

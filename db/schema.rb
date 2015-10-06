@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151005024606) do
+ActiveRecord::Schema.define(version: 20151005191854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,16 @@ ActiveRecord::Schema.define(version: 20151005024606) do
   add_index "packages", ["event_id", "id"], name: "index_packages_on_event_id_and_id", unique: true, using: :btree
   add_index "packages", ["event_id", "slug"], name: "index_packages_on_event_id_and_slug", unique: true, using: :btree
 
+  create_table "registrations", force: :cascade do |t|
+    t.integer  "event_id"
+    t.integer  "package_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "registrations", ["package_id", "user_id"], name: "index_registrations_on_package_id_and_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email",                  default: "",    null: false
@@ -89,4 +99,7 @@ ActiveRecord::Schema.define(version: 20151005024606) do
   add_foreign_key "administrators", "users", on_delete: :cascade
   add_foreign_key "identities", "users", on_delete: :cascade
   add_foreign_key "packages", "events", on_delete: :cascade
+  add_foreign_key "registrations", "events", on_delete: :cascade
+  add_foreign_key "registrations", "packages", on_delete: :cascade
+  add_foreign_key "registrations", "users", on_delete: :cascade
 end

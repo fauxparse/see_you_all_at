@@ -1,5 +1,11 @@
 Given(/^an event exists$/) do
   @event = FactoryGirl.create(:event)
+  @event.packages.create(name: I18n.t("packages.new.default", position: 0))
+end
+
+Given(/^an event exists with (\d+) packages?$/) do |n|
+  step("an event exists")
+  (n.to_i - 1).times { FactoryGirl.create(:package, event: @event) }
 end
 
 Given(/^I am an event administrator$/) do
@@ -15,6 +21,10 @@ end
 
 When(/^I visit the new event page$/) do
   visit(new_event_path)
+end
+
+When(/^I visit the event's page$/) do
+  visit(event_path(@event))
 end
 
 When(/^I visit the event settings page$/) do

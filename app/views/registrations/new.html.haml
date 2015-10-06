@@ -1,0 +1,4 @@
+%h1= t(".heading", event: @event.name)
+
+= form_for(@registration, url: event_registration_path(@event)) do |form|
+  = button_tag(".continue", type: :submit)

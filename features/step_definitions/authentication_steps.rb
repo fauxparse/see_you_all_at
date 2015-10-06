@@ -57,11 +57,22 @@ When(/^I choose a new password$/) do
   fill_in("Confirm new password", with: password)
 end
 
-When(/^I log in$/) do
-  visit(new_user_session_path)
+When(/^I enter my login details$/) do
   step("I enter my email address")
   fill_in("Password", with: @user.password)
+end
+
+When(/^I log in$/) do
+  visit(new_user_session_path)
+  step("I enter my login details")
   click_button("Log in")
+end
+
+When(/^I confirm my email address$/) do
+  step("I should receive an email")
+  step("I open the email")
+  step("I follow \"Confirm my account\" in the email")
+  step("I log in")
 end
 
 Then(/^I should be on the home page$/) do
