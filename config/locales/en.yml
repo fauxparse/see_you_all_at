@@ -15,6 +15,10 @@ en:
       save: "Save settings"
     show:
       register: "Register now"
+    edit:
+      tabs:
+        settings: Settings
+        packages: Packages
 
   packages:
     new:

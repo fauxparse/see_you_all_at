@@ -1,0 +1,11 @@
+main {
+  padding: 0 1rem;
+
+  @include media($medium-screen) {
+    padding: 0 $gutter;
+  }
+}
+
+.hide {
+  display: none;
+}

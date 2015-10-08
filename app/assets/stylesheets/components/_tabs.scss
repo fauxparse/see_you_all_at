@@ -1,0 +1,37 @@
+.tab-strip {
+  margin-left: -$gutter;
+  margin-right: -0.5rem;
+
+  ul {
+    @include display(flex);
+    margin: 0;
+    position: relative;
+
+    li {
+      @include flex(1 0 0);
+
+      a {
+        @include ellipsis;
+        display: block;
+        text-align: center;
+        text-transform: uppercase;
+        color: secondary-color(white);
+        font-weight: $medium-font-weight;
+        line-height: 1rem;
+        padding: 1rem 0.75rem;
+      }
+
+      &.selected a {
+        color: white;
+      }
+    }
+  }
+
+  .tab-strip-highlight {
+    @include smooth-transition(all, $fast-duration);
+    position: absolute;
+    bottom: 0;
+    height: 0.125rem;
+    background: $yellow;
+  }
+}

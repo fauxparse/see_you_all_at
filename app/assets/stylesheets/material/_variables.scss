@@ -1,0 +1,10 @@
+$accent-color: $blue;
+
+$mobile-width: 20rem;
+$gutter: 4.5rem;
+
+$primary-toolbar-height: 3.5rem;
+
+$sidebar-base-width: percentage(($mobile-width - $primary-toolbar-height) / $mobile-width);
+$sidebar-max-width: $mobile-width;
+$sidebar-z-index: 100;

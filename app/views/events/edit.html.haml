@@ -1,1 +1,5 @@
-= render "form"
+- tabs do |strip|
+  = strip.tab(t(".tabs.settings"), "settings") do
+    = render "form"
+  = strip.tab(t(".tabs.packages"), "packages") do
+    -# nothing

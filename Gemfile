@@ -41,6 +41,9 @@ gem 'stringex'
 
 gem 'bourbon'
 gem 'neat'
+gem 'inline_svg'
+
+gem 'mithril_rails', github: 'fauxparse/mithril-rails'
 
 # Use Unicorn as the app server
 # gem 'unicorn'

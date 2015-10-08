@@ -1,0 +1,34 @@
+.primary-toolbar {
+  @include position(fixed, 0rem 0rem null 0rem);
+  @include display(flex);
+  @include align-items(flex-start);
+  min-height: $primary-toolbar-height;
+  background: $accent-color;
+  color: text-color($white);
+  padding: 0 0.5rem;
+
+  .hamburger {
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    margin: 0.5rem ($gutter - 3.5rem) 0.5rem 0.5rem;
+  }
+
+  .header-content {
+    @include flex(1);
+    @include align-self(flex-end);
+
+    h1 {
+      margin: 0;
+      padding: 1rem 0;
+      font-size: 1.25rem;
+      line-height: 1.5rem;
+    }
+  }
+
+  ~ main {
+    padding-top: $primary-toolbar-height + 1rem;
+  }
+}

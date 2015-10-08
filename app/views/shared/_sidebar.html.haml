@@ -1,0 +1,10 @@
+%input#show-sidebar{type: "checkbox"}
+%aside.sidebar.left-sidebar
+  .current-user
+    - if signed_in?
+      = avatar
+      = link_to("Log out", destroy_user_session_path, method: :delete)
+    - else
+      = link_to("Log in", new_user_session_path)
+      = link_to("Sign up", new_user_registration_path)
+%label.sidebar-scrim{for: "show-sidebar"}

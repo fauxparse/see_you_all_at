@@ -1,0 +1,39 @@
+#show-sidebar {
+  display: none;
+}
+
+.sidebar {
+  @include smooth-transition();
+  @include transition-property(transform, box-shadow);
+  @include transition-delay(0s, $fast-duration);
+  @include transition-duration($medium-duration, $fast-duration);
+  @include position(fixed, 0rem null 0rem 0rem);
+  @include transform(translateX(-100%));
+  width: $sidebar-base-width;
+  max-width: $sidebar-max-width;
+  background: $base-background-color;
+  z-index: $sidebar-z-index;
+
+  &.left-sidebar {
+    #show-sidebar:checked ~ & {
+      box-shadow: $shadow-side-nav;
+      @include transform(translateX(0%));
+      @include transition-delay(0s, 0s);
+
+      + .sidebar-scrim {
+        pointer-events: auto;
+        opacity: 1;
+      }
+    }
+  }
+
+  + .sidebar-scrim {
+    @include position(fixed, 0rem 0rem 0rem 0rem);
+    @include smooth-transition();
+    margin: 0;
+    background: dark-scrim-color();
+    opacity: 0;
+    pointer-events: none;
+    z-index: $sidebar-z-index - 1;
+  }
+}

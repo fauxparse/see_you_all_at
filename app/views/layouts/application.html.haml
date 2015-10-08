@@ -3,20 +3,17 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title See you all at…
-    = stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,400italic', media: 'all'
+    = stylesheet_link_tag 'https://fonts.googleapis.com/icon?family=Material+Icons', media: 'all'
+    = stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic', media: 'all'
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    %header
-      - if signed_in?
-        = avatar
-        = link_to("Log out", destroy_user_session_path, method: :delete)
-      - else
-        = link_to("Log in", new_user_session_path)
-        = link_to("Sign up", new_user_registration_path)
+    = render "shared/sidebar"
+    = render "shared/header"
 
-    - flash.each do |type, message|
-      = content_tag :p, message, class: "flash #{type}"
+    %main
+      - flash.each do |type, message|
+        = content_tag :p, message, class: "flash #{type}"
 
-    = yield
+      = yield

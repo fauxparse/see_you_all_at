@@ -4,6 +4,7 @@ body {
   color: $base-font-color;
   font-family: $base-font-family;
   font-size: $base-font-size;
+  font-weight: $base-font-weight;
   line-height: $base-line-height;
 }
 
@@ -15,6 +16,7 @@ h5,
 h6 {
   font-family: $heading-font-family;
   font-size: $base-font-size;
+  font-weight: $medium-font-weight;
   line-height: $heading-line-height;
   margin: 0 0 $small-spacing;
 }
@@ -26,7 +28,7 @@ p {
 a {
   color: $action-color;
   text-decoration: none;
-  transition: color 0.1s linear;
+  transition: color $fast-duration linear;
 
   &:active,
   &:focus,
