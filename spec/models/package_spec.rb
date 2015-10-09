@@ -7,6 +7,10 @@ RSpec.describe Package, type: :model do
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_uniqueness_of(:name).scoped_to(:event_id) }
 
+  it "uses its slug for URL generation" do
+    expect(subject.to_param).to match(/^package-\d+$/)
+  end
+
   context "with siblings" do
     subject { event.packages.first }
 
