@@ -10,7 +10,7 @@ engines:
   csslint:
     enabled: false
   scss-lint:
-    enabled: true
+    enabled: false
 
 ratings:
   paths:
