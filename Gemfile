@@ -48,6 +48,7 @@ gem 'inline_svg'
 gem 'mithril_rails', github: 'fauxparse/mithril-rails'
 
 gem 'active_model_serializers', '>= 0.10.0.rc3'
+gem 'acts_as_list'
 
 # Use Unicorn as the app server
 # gem 'unicorn'

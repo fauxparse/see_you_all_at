@@ -1,7 +1,7 @@
 class ActivityType < ActiveRecord::Base
-  include Sortable
-
   belongs_to :event, inverse_of: :activity_types
+
+  acts_as_list scope: :event, top_of_list: 0
 
   acts_as_url :plural,
     url_attribute: :slug,
@@ -10,7 +10,7 @@ class ActivityType < ActiveRecord::Base
 
   validates :name,
     presence: { allow_blank: false },
-    uniqueness: { scope: :event_id }
+    uniqueness: { scope: :event_id, case_sensitive: false }
 
   def plural
     name.try(:pluralize)
@@ -18,11 +18,5 @@ class ActivityType < ActiveRecord::Base
 
   def to_param
     slug
-  end
-
-  private
-
-  def sortable_scope
-    event.activity_types
   end
 end

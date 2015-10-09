@@ -1,11 +1,11 @@
 FactoryGirl.define do
-  ACTIVITY_TYPES = %w(activity outing occasion soiree party)
+  activity_types = %w(activity outing occasion soiree party)
 
   sequence(:name) { |n| "User #{n}" }
   sequence(:email) { |n| "user_#{n}@example.com" }
   sequence(:event_name) { |n| "Event #{n}" }
   sequence(:package_name) { |n| "Package #{n}" }
-  sequence(:activity_type_name) { |n| ACTIVITY_TYPES[n % ACTIVITY_TYPES.size] }
+  sequence(:activity_type_name) { |n| activity_types[n % activity_types.size] }
 
   factory :user do
     name

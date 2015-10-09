@@ -1,8 +1,8 @@
 class Package < ActiveRecord::Base
-  include Sortable
-
   belongs_to :event, inverse_of: :packages
   has_many :registrations, inverse_of: :package
+
+  acts_as_list scope: :event, top_of_list: 0
 
   acts_as_url :name,
     url_attribute: :slug,
@@ -15,11 +15,5 @@ class Package < ActiveRecord::Base
 
   def to_param
     slug
-  end
-
-  private
-
-  def sortable_scope
-    event.packages
   end
 end

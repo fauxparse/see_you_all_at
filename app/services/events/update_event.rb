@@ -26,16 +26,14 @@ class UpdateEvent
     values = hash.to_a.sort_by { |a| a.first.to_i }.map(&:last)
     collection = event.send(key)
     ids = add_or_update_sorted_items(collection, values)
-    collection.each do |record|
-      record.mark_for_destruction unless ids.include?(record.id)
-    end
+    collection.each { |r| r.mark_for_destruction unless ids.include?(r.id) }
   end
 
   def add_or_update_sorted_items(collection, values)
     ids = []
     values.each.with_index do |attrs, position|
-      id = attrs[:id]
-      record = id && collection.detect { |r| r.id == attrs[:id].to_i } ||
+      id = attrs[:id].to_i
+      record = id && collection.detect { |r| r.id == id } ||
                collection.build
       record.assign_attributes(attrs.merge(position: position))
       ids << id
