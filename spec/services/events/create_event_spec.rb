@@ -28,7 +28,7 @@ describe CreateEvent do
 
   it "creates a default activity type" do
     expect { subject }.to change { ActivityType.count }.by(1)
-    expect(ActivityType.last.name).to eq("Activity")
+    expect(ActivityType.last.name).to eq("activity")
   end
 
   context "without an event name" do

@@ -20,17 +20,26 @@ class UpdateEvent
   private
 
   def update_sorted_collection(key)
-    return unless hash = @params.delete(key)
-    values = hash.to_a.sort_by { |a| a.first.to_i }.map(&:last)
-    ids = []
-    collection = event.send(key)
+    hash = @params.delete(key)
+    return if hash.nil?
 
+    values = hash.to_a.sort_by { |a| a.first.to_i }.map(&:last)
+    collection = event.send(key)
+    ids = add_or_update_sorted_items(collection, values)
+    collection.each do |record|
+      record.mark_for_destruction unless ids.include?(record.id)
+    end
+  end
+
+  def add_or_update_sorted_items(collection, values)
+    ids = []
     values.each.with_index do |attrs, position|
       id = attrs[:id]
       record = id && collection.detect { |r| r.id == attrs[:id].to_i } ||
-             collection.build
+               collection.build
       record.assign_attributes(attrs.merge(position: position))
       ids << id
     end
+    ids
   end
 end

@@ -9,7 +9,6 @@ Feature: Create an event
       And I enter my event details
       And I click the "Create event" button
      Then I should be on the event settings page
-      And I should see the event's name
 
   Scenario: Attempt to create an event when not logged in
     Given I am not logged in

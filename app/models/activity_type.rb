@@ -13,7 +13,11 @@ class ActivityType < ActiveRecord::Base
     uniqueness: { scope: :event_id }
 
   def plural
-    name.pluralize
+    name.try(:pluralize)
+  end
+
+  def to_param
+    slug
   end
 
   private

@@ -61,7 +61,7 @@ Then(/^I should see the event's name$/) do
 end
 
 Then(/^I should see the new event name$/) do
-  expect(page).to have_content(@new_event_name)
+  expect(find("#event_name").value).to eq(@new_event_name)
 end
 
 Then(/^the event should have been updated$/) do

@@ -12,4 +12,3 @@ Feature: Login
      When I enter my login details
       And I click the "Log in" button
      Then I should be on the event settings page
-      And I should see the event's name
