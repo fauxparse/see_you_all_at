@@ -19,7 +19,7 @@ module TabsHelper
     end
   end
 
-  def tabs(&block)
+  def tabs
     tab_strip = TabStrip.new(self)
     content = yield(tab_strip)
     content_for(:header, tab_strip.to_html)

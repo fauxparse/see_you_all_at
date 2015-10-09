@@ -13,8 +13,9 @@ class CreateEvent
     power.creatable_event!(@event)
 
     Event.transaction do
-      @event.administrators.build(user: @user) if user.present?
-      @event.packages.build(name: I18n.t("packages.new.default", position: 0))
+      build_administrator if user.present?
+      build_default_package
+      build_default_activity_type
       @event.save!
     end
   end
@@ -23,5 +24,23 @@ class CreateEvent
 
   def power
     @power ||= Power.new(@user)
+  end
+
+  def build_administrator
+    @event.administrators.build(user: @user)
+  end
+
+  def build_default_package
+    @event.packages.build(
+      name: I18n.t("packages.new.default"),
+      position: 0
+    )
+  end
+
+  def build_default_activity_type
+    @event.activity_types.build(
+      name: I18n.t("activity_types.new.default"),
+      position: 0
+    )
   end
 end

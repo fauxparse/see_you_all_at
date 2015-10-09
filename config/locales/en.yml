@@ -24,6 +24,10 @@ en:
     new:
       default: "Basic"
 
+  activity_types:
+    new:
+      default: "activity"
+
   registrations:
     new:
       heading: "Register for %{event}"

@@ -47,11 +47,17 @@ gem 'inline_svg'
 
 gem 'mithril_rails', github: 'fauxparse/mithril-rails'
 
+gem 'active_model_serializers', '>= 0.10.0.rc3'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-dragula'
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

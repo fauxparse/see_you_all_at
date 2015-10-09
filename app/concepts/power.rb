@@ -27,6 +27,10 @@ class Power
   power(:destroyable_events) { updatable_events }
 
   power :assignable_event_fields do
-    [:name, :slug, :starts_on, :ends_on]
+    [
+      :name, :slug, :starts_on, :ends_on,
+      { activity_types: [:id, :name, :position] },
+      { packages: [:id, :name, :position] }
+    ]
   end
 end

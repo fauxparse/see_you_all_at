@@ -1,0 +1,71 @@
+.gu-mirror {
+  pointer-events: none;
+}
+
+.package-editor-row {
+  th:first-child {
+    padding: 0;
+  }
+
+  &.gu-mirror {
+    @include display(flex);
+    background: white;
+    box-shadow: $shadow-dragging;
+
+    th, td {
+      @include flex(1);
+      border: none;
+    }
+  }
+}
+
+.package-editor-column {
+  padding: 0;
+
+  &.gu-mirror {
+    background: white;
+    box-shadow: $shadow-dragging;
+    display: block;
+    height: auto;
+
+    th, td {
+      display: block;
+    }
+  }
+}
+
+.package-editor-header {
+  @include display(flex);
+  @include align-items(center);
+  height: 2.5rem;
+
+  a {
+    color: disabled-color();
+    padding: .25rem;
+
+    &:hover {
+      color: secondary-color();
+    }
+
+    i { display: block; }
+  }
+
+  span {
+    @include flex(1);
+    @include ellipsis;
+    line-height: 1.5rem;
+    vertical-align: middle;
+    text-align: left;
+    padding-left: 0.5rem;
+  }
+
+  .package-editor-row th:first-child & {
+    span {
+      text-align: left;
+    }
+  }
+}
+
+.package-editor-allowance {
+  padding-left: 2.5rem;
+}

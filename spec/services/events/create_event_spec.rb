@@ -26,6 +26,11 @@ describe CreateEvent do
     expect(Package.last.name).to eq("Basic")
   end
 
+  it "creates a default activity type" do
+    expect { subject }.to change { ActivityType.count }.by(1)
+    expect(ActivityType.last.name).to eq("Activity")
+  end
+
   context "without an event name" do
     let(:params) { FactoryGirl.attributes_for(:event).except(:name) }
 

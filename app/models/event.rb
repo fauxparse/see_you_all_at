@@ -5,6 +5,8 @@ class Event < ActiveRecord::Base
     autosave: true
   has_many :packages, inverse_of: :event, dependent: :destroy, autosave: true
   has_many :registrations, inverse_of: :event, dependent: :destroy
+  has_many :activity_types, inverse_of: :event, dependent: :destroy,
+    autosave: true
 
   before_validation :update_times
 

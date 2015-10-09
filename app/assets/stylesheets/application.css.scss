@@ -3,10 +3,10 @@
 @import "material/all";
 @import "bitters/base";
 @import "neat";
-
-@import "components/all";
-
-@import "layout";
+@import "dragula";
 
 $nprogress-color: $pink;
 @import 'nprogress';
+
+@import "layout";
+@import "components/all";
