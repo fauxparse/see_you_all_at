@@ -4,6 +4,8 @@
 #= require nprogress
 #= require nprogress-turbolinks
 #= require dragula
+#= require tether
+#= require drop
 #= require mithril
 #= require mithril_ujs
 #= require inflection

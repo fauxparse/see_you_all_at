@@ -1,6 +1,7 @@
 class Package < ActiveRecord::Base
   belongs_to :event, inverse_of: :packages
   has_many :registrations, inverse_of: :package
+  has_many :limits, inverse_of: :package, dependent: :destroy, autosave: true
 
   acts_as_list scope: :event, top_of_list: 0
 

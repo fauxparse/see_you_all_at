@@ -58,6 +58,7 @@ gem 'acts_as_list'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-dragula'
+  gem 'rails-assets-drop'
 end
 
 group :development, :test do

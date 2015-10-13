@@ -2,6 +2,8 @@ class EventsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_event, only: [:show, :edit, :update, :destroy]
 
+  wrap_parameters :event, include: [:name, :packages, :activity_types]
+
   require_power_check
   power :events, as: :events
 
@@ -32,7 +34,19 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(*current_power.assignable_event_fields)
+    params.require(:event)
+      .permit(*current_power.assignable_event_fields, package_limit_fields)
+  end
+
+  def package_limit_fields
+    packages = params[:event] && params[:event][:packages]
+    return {} unless packages.present?
+
+    activity_type_ids = packages.values.inject([]) do |ids, pkg|
+      ids | pkg[:limits].keys
+    end
+
+    { packages: [:id, :name, :position, { limits: activity_type_ids }] }
   end
 
   def load_event

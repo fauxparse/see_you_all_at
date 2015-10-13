@@ -35,9 +35,30 @@ class UpdateEvent
       id = attrs[:id].to_i
       record = id && collection.detect { |r| r.id == id } ||
                collection.build
-      record.assign_attributes(attrs.merge(position: position))
+      assign_attributes(record, attrs.merge(position: position))
       ids << id
     end
     ids
+  end
+
+  def assign_attributes(record, attributes)
+    limits = attributes.delete(:limits)
+    assign_limits(record, limits) if limits
+    record.assign_attributes(attributes)
+  end
+
+  def assign_limits(record, limits)
+    ids = record.event.activity_types.map(&:id)
+
+    record.limits.each do |limit|
+      limit.mark_for_destruction unless ids.include?(limit.activity_type_id)
+    end
+
+    limits.each_pair do |id, maximum|
+      id = id.to_i
+      limit = record.limits.detect { |l| l.activity_type_id == id } ||
+              record.limits.build(activity_type_id: id)
+      limit.maximum = maximum.to_i
+    end
   end
 end

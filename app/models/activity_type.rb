@@ -1,5 +1,6 @@
 class ActivityType < ActiveRecord::Base
   belongs_to :event, inverse_of: :activity_types
+  has_many :limits, inverse_of: :activity_type, dependent: :destroy
 
   acts_as_list scope: :event, top_of_list: 0
 

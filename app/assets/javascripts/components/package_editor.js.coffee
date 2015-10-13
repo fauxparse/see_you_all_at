@@ -8,7 +8,7 @@ class PackageEditor
   view: =>
     m("div",
       { class: "package-editor" },
-      m("table", { config: @initDrag },
+      m("table", { config: @init },
         m("thead",
           m("tr",
             { class: "package-names" }
@@ -51,11 +51,14 @@ class PackageEditor
     )
 
   cell: (pkg, type) ->
-    m("td", {
-      "class": "package-editor-allowance"
-      "data-package-id": pkg.id(),
-      "data-activity-type-id": type.id()
-    }, "#{pkg.name()} • #{type.name()}")
+    m("td",
+      {
+        "class": "package-limit"
+        "data-package-id": pkg.id(),
+        "data-activity-type-id": type.id()
+      },
+      m.component(LimitEditor.component, { package: pkg, activityType: type})
+    )
 
   icon: (icon) ->
     m("a", { href: "#", rel: icon }, m("i", { class: "material-icons" }, icon))
@@ -63,12 +66,13 @@ class PackageEditor
   hidden: (prefix, field, value) ->
     m("input", { type: "hidden", name: "#{prefix}[#{field}]", value: value })
 
-  initDrag: (@table, isInitialized, context) =>
+  init: (@table, isInitialized, context) =>
     return if isInitialized
 
     @dragRows = dragula
       isContainer: (el) -> el.classList.contains("activity-types")
       direction: "vertical"
+    .on("drag", @dragStart)
     .on("cloned", @dragRowCloned)
     .on("dragend", @dragRowEnd)
 
@@ -79,9 +83,13 @@ class PackageEditor
         !handle.classList.contains("top-left")
       accepts: (el, target, source, sibling) ->
         !sibling?.classList.contains("top-left")
+    .on("drag", @dragStart)
     .on("cloned", @dragColumnCloned)
     .on("shadow", @dragColumnShadow)
     .on("dragend", @dragColumnEnd)
+
+  dragStart: ->
+    drop.close() for drop in Drop.drops
 
   dragRowCloned: (clone, original, type) ->
     clone.style.width = original.offsetWidth + "px"
@@ -129,7 +137,100 @@ class PackageEditor
         for pkg in @packages() when pkg.id() == id
           pkg.position(position)
 
+class LimitEditor
+  constructor: (options = {}) ->
+    @package = m.prop(options.package)
+    @type = m.prop(options.activityType)
+
+  limit: (maximum) ->
+    @package().limit(@type().id(), maximum) || 0
+
+  view: (controller) =>
+    name = "event[packages][#{@package().position()}]" +
+      "[limits][#{@type().id()}]"
+    m("div",
+      { class: "package-limit-editor" },
+      m("input", { type: "hidden", name: name, value: @limit() }),
+      m("div", { config: @init }, m("span", @label(@limit()))),
+      m("div",
+        @button("none", "block", @selectNone, @limit() == 0),
+        @button("minus", "remove_circle_outline", @minus),
+        m("span", @label(@limit())),
+        @button("plus", "add_circle_outline", @plus),
+        @button("all", "all", @selectAll, @limit() == -1)
+      )
+    )
+
+  init: (el, isInitialized, context) =>
+    unless isInitialized
+      new Drop
+        target: el
+        content: el.nextSibling
+        classes: "package-limit-editor-ui"
+        tetherOptions:
+          attachment: "middle center"
+          targetAttachment: "middle center"
+
+  label: (limit) ->
+    if limit == -1
+      "∞"
+    else if limit == 0
+      "—"
+    else
+      limit
+
+  button: (rel, icon, action, selected) ->
+    options = { rel: rel }
+    options.onmousedown = action if action
+    options.class == "selected" if selected
+    options.onclick = @noop
+
+    if rel == "all"
+      m("button", options, "∞")
+    else
+      m("button", options, m("i", { class: "material-icons" }, icon))
+
+  selectNone: (e) =>
+    preventDefault(e)
+    m.computation => @limit(0)
+
+  selectAll: (e) =>
+    preventDefault(e)
+    m.computation => @limit(-1)
+
+  minus: (e) =>
+    preventDefault(e)
+    m.computation =>
+      limit = if @limit() == -1
+        10
+      else if @limit() > 0
+        @limit() - 1
+      else
+        @limit()
+      @limit(limit)
+
+  plus: (e) =>
+    preventDefault(e)
+    m.computation =>
+      @limit(if @limit() == -1 then 10 else @limit() + 1)
+
+  noop: (e) ->
+    preventDefault(e)
+
+LimitEditor.component =
+  controller: (options = {}) ->
+    new LimitEditor(options)
+
+  view: (controller) ->
+    controller.view()
+
 byPosition = (a, b) -> a.position - b.position
+
+preventDefault = (e) ->
+  if e.preventDefault?
+    e.preventDefault()
+  else
+    e.returnValue = false
 
 App.Components.PackageEditor =
   controller: (options = {}) ->

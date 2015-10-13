@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151008010734) do
+ActiveRecord::Schema.define(version: 20151012225616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,14 @@ ActiveRecord::Schema.define(version: 20151008010734) do
   end
 
   add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
+
+  create_table "limits", force: :cascade do |t|
+    t.integer "package_id"
+    t.integer "activity_type_id"
+    t.integer "maximum",          default: 0
+  end
+
+  add_index "limits", ["package_id", "activity_type_id"], name: "index_limits_on_package_id_and_activity_type_id", unique: true, using: :btree
 
   create_table "packages", force: :cascade do |t|
     t.integer  "event_id"
@@ -108,6 +116,8 @@ ActiveRecord::Schema.define(version: 20151008010734) do
   add_foreign_key "administrators", "events", on_delete: :cascade
   add_foreign_key "administrators", "users", on_delete: :cascade
   add_foreign_key "identities", "users", on_delete: :cascade
+  add_foreign_key "limits", "activity_types", on_delete: :cascade
+  add_foreign_key "limits", "packages", on_delete: :cascade
   add_foreign_key "packages", "events", on_delete: :cascade
   add_foreign_key "registrations", "events", on_delete: :cascade
   add_foreign_key "registrations", "packages", on_delete: :cascade

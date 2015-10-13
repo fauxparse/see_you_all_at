@@ -66,6 +66,69 @@
   }
 }
 
-.package-editor-allowance {
-  padding-left: 2.5rem;
+.package-editor-row .package-limit,
+.package-editor-column .package-limit {
+  padding: 0;
+}
+
+.package-limit-editor {
+  padding: 0;
+  position: relative;
+}
+
+.package-limit-editor-ui {
+  min-height: 2.5rem;
+
+  &.drop-target {
+    @include display(flex);
+    @include align-items(center);
+    cursor: pointer;
+  }
+
+  &.drop-element {
+    background: white;
+    width: 8rem;
+
+    .drop-content div {
+      height: 2.5rem;
+      @include display(flex);
+      @include align-items(center);
+    }
+  }
+
+  span {
+    @include flex(1);
+    text-align: center;
+    line-height: 1.5rem;
+    vertical-align: middle;
+    min-width: 2rem;
+  }
+
+  button {
+    padding: 0;
+    background: none;
+    color: disabled-color();
+
+    i { display: block; }
+
+    &.selected {
+      color: $action-color;
+    }
+
+    &[rel="all"] {
+      font-size: 1rem;
+      line-height: 1.125rem;
+      overflow: hidden;
+      width: 1.25rem;
+      height: 1.25rem;
+      border: 0.125rem solid disabled-color();
+      border-radius: 50%;
+      box-sizing: border-box;
+      margin: 0.125rem;
+
+      &.selected {
+        border-color: $action-color;
+      }
+    }
+  }
 }
