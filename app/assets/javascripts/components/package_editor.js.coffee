@@ -182,7 +182,7 @@ class LimitEditor
   button: (rel, icon, action, selected) ->
     options = { rel: rel }
     options.onmousedown = action if action
-    options.class == "selected" if selected
+    options.class = "selected" if selected
     options.onclick = @noop
 
     if rel == "all"
@@ -200,6 +200,9 @@ class LimitEditor
 
   minus: (e) =>
     preventDefault(e)
+    @timedRepeatButton(@increment)
+
+  increment: =>
     m.computation =>
       limit = if @limit() == -1
         10
@@ -211,8 +214,25 @@ class LimitEditor
 
   plus: (e) =>
     preventDefault(e)
+    @timedRepeatButton(@decrement)
+
+  decrement: =>
     m.computation =>
       @limit(if @limit() == -1 then 10 else @limit() + 1)
+
+  timedRepeatButton: (callback) ->
+    repeat = false
+    delay = setTimeout ->
+      callback()
+      repeat = setInterval(callback, 100)
+    , 250
+
+    callback()
+    clearRepeat = ->
+      clearTimeout(delay)
+      clearTimeout(repeat)
+      document.removeEventListener("mouseup", clearRepeat)
+    document.addEventListener("mouseup", clearRepeat)
 
   noop: (e) ->
     preventDefault(e)
