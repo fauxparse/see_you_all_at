@@ -26,4 +26,79 @@ describe UpdateEvent do
       expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
     end
   end
+
+  context "with packages" do
+    let(:package_1) { FactoryGirl.create(:package, event: event) }
+    let(:package_2) { FactoryGirl.create(:package, event: event) }
+
+    before { package_1 && package_2 }
+
+    context "reordered" do
+      let(:params) do
+        {
+          packages: {
+            "0" => { id: package_2.id },
+            "1" => { id: package_1.id }
+          }
+        }
+      end
+
+      it "updates the package positions" do
+        service.call
+        event.reload
+        expect(event.packages.sort_by(&:position)).to eq([package_2, package_1])
+      end
+    end
+
+    context "with one deleted" do
+      let(:params) do
+        { packages: { "0" => { id: package_2.id } } }
+      end
+
+      it "deletes the missing package" do
+        expect { service.call }.to change { Package.count }.by(-1)
+      end
+    end
+
+    context "with one added" do
+      let(:params) do
+        {
+          packages: {
+            "0" => { id: package_1.id },
+            "1" => { id: package_2.id },
+            "2" => { name: "New package" }
+          }
+        }
+      end
+
+      it "adds the new package" do
+        expect { service.call }.to change { Package.count }.by(1)
+        expect(Package.last.name).to eq("New package")
+        event.reload
+      end
+    end
+  end
+
+  context "with package limits" do
+    let(:package) { FactoryGirl.create(:package, event: event) }
+    let(:activity_type) { FactoryGirl.create(:activity_type, event: event) }
+    let(:params) do
+      {
+        packages: {
+          "0" => {
+            id: package.id,
+            limits: { activity_type.id => 2 }
+          }
+        }
+      }
+    end
+
+    before do
+      Limit.create(package: package, activity_type: activity_type, maximum: 1)
+    end
+
+    it "updates package limits" do
+      expect { service.call }.to change { Limit.first.maximum }.from(1).to(2)
+    end
+  end
 end

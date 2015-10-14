@@ -26,7 +26,9 @@ class UpdateEvent
     values = hash.to_a.sort_by { |a| a.first.to_i }.map(&:last)
     collection = event.send(key)
     ids = add_or_update_sorted_items(collection, values)
-    collection.each { |r| r.mark_for_destruction unless ids.include?(r.id) }
+    collection.select(&:persisted?).each do |record|
+      record.mark_for_destruction unless ids.include?(record.id)
+    end
   end
 
   def add_or_update_sorted_items(collection, values)
