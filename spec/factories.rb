@@ -6,6 +6,7 @@ FactoryGirl.define do
   sequence(:event_name) { |n| "Event #{n}" }
   sequence(:package_name) { |n| "Package #{n}" }
   sequence(:activity_type_name) { |n| activity_types[n % activity_types.size] }
+  sequence(:activity_name) { |n| "Event #{n}" }
 
   factory :user do
     name
@@ -33,6 +34,11 @@ FactoryGirl.define do
   factory :activity_type do
     event
     name { generate(:activity_type_name) }
+  end
+
+  factory :activity do
+    activity_type
+    name { generate(:activity_name) }
   end
 
   factory :registration do

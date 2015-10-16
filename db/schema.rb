@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151012225616) do
+ActiveRecord::Schema.define(version: 20151015224945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activities", force: :cascade do |t|
+    t.integer  "activity_type_id"
+    t.string   "name"
+    t.string   "slug"
+    t.text     "description"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "activities", ["activity_type_id", "slug"], name: "index_activities_on_activity_type_id_and_slug", unique: true, using: :btree
 
   create_table "activity_types", force: :cascade do |t|
     t.integer "event_id"
@@ -112,6 +123,7 @@ ActiveRecord::Schema.define(version: 20151012225616) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "activities", "activity_types", on_delete: :cascade
   add_foreign_key "activity_types", "events", on_delete: :cascade
   add_foreign_key "administrators", "events", on_delete: :cascade
   add_foreign_key "administrators", "users", on_delete: :cascade

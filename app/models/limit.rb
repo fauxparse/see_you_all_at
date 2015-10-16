@@ -1,6 +1,6 @@
 class Limit < ActiveRecord::Base
   belongs_to :package, inverse_of: :limits
-  belongs_to :activity_type, inverse_of: :limits
+  belongs_to :activity_type
 
   UNLIMITED = -1
 
