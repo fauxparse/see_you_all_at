@@ -50,7 +50,7 @@ class EventsController < ApplicationController
   end
 
   def load_event
-    @event ||= events.find_by(slug: params[:id])
+    @event ||= events.find_by!(slug: params[:id])
   end
 
   def create_or_update_event(service)
