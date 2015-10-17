@@ -13,6 +13,7 @@ class Event < ActiveRecord::Base
     presence: { allow_blank: false }
   validates :name, :slug, presence: { allow_blank: false }
   validates :slug, uniqueness: { case_sensitive: false }
+  validates_with DateValidator, if: [:starts_on?, :ends_on?]
 
   def to_param
     slug

@@ -2,22 +2,31 @@ require "rails_helper"
 
 RSpec.describe Event, type: :model do
   subject { event }
-  let(:event) { FactoryGirl.create(:event, name: "My fancy party") }
+  let(:event) { create(:event, name: "My fancy party") }
 
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_uniqueness_of(:slug).case_insensitive }
 
-  context "#slug" do
+  context "with invalid dates" do
+    let(:event) do
+      build(:event, starts_on: Time.zone.today, ends_on: 1.week.ago)
+    end
+
+    it { is_expected.not_to be_valid }
+  end
+
+  describe "#slug" do
     subject { event.slug }
 
     it { is_expected.not_to be_blank }
     it { is_expected.to eq("my-fancy-party") }
   end
 
-  context "#starts_at" do
+  describe "#starts_at" do
     subject { event.starts_at }
-    let(:event) { FactoryGirl.create(:event, attrs) }
-    let(:attrs) { { time_zone: time_zone, starts_on: date } }
+    let(:event) do
+      create(:event, time_zone: time_zone, starts_on: date, ends_on: date + 1)
+    end
     let(:date) { Date.civil(2016, 1, 1) }
 
     context "for an event in San Francisco" do
@@ -33,15 +42,15 @@ RSpec.describe Event, type: :model do
     end
   end
 
-  context "#to_param" do
+  describe "#to_param" do
     subject { event.to_param }
 
     it { is_expected.to eq("my-fancy-party") }
   end
 
-  context "::administered_by" do
+  describe ".administered_by" do
     subject { Event.administered_by(user) }
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { create(:user) }
 
     context "when the user is not an administrator" do
       it { is_expected.not_to include(event) }

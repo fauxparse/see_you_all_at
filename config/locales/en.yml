@@ -5,6 +5,10 @@ en:
         slug: URL
         starts_on: Start date
         ends_on: End date
+  errors:
+    attributes:
+      ends_on:
+        invalid: can’t be before start date
 
   profile:
     updated: "Your profile was updated"
