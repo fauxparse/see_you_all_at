@@ -1,5 +1,5 @@
 class App.Models.ActivityType
-  constructor: (attrs) ->
+  constructor: (attrs = {}) ->
     @id = m.prop(attrs.id)
     @name = m.prop(attrs.name)
     @slug = m.prop(attrs.slug)

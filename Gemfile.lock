@@ -163,6 +163,8 @@ GEM
       tilt
     hashie (3.4.2)
     i18n (0.7.0)
+    i18n-js (3.0.0.rc11)
+      i18n (~> 0.6)
     inline_svg (0.6.0)
       activesupport (>= 4.1.9)
       loofah (>= 2.0)
@@ -386,6 +388,7 @@ DEPENDENCIES
   guard-rspec
   guard-rubocop
   haml
+  i18n-js (>= 3.0.0.rc11)
   inline_svg
   jbuilder (~> 2.0)
   jquery-rails

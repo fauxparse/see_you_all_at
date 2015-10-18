@@ -23,6 +23,9 @@ en:
       tabs:
         settings: Settings
         packages: Packages
+      save: Save
+      packages:
+        new: New package
 
   packages:
     new:

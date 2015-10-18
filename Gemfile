@@ -50,6 +50,8 @@ gem 'mithril_rails', github: 'fauxparse/mithril-rails'
 gem 'active_model_serializers', '>= 0.10.0.rc3'
 gem 'acts_as_list'
 
+gem 'i18n-js', '>= 3.0.0.rc11'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

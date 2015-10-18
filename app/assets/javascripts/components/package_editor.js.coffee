@@ -1,4 +1,4 @@
-class PackageEditor
+class App.Components.PackageEditor
   constructor: (options = {}) ->
     packages = (options.packages || []).sort(byPosition)
     @packages = m.prop(new App.Models.Package(pkg) for pkg in packages)
@@ -22,7 +22,8 @@ class PackageEditor
         )
       ),
       m("div", { class: "buttons" },
-        m("button", { rel: "save", type: "submit" }, "Save")
+        m("button", { rel: "save", type: "submit" }, I18n.t("events.edit.save")),
+        m("button", { rel: "new-package", onclick: @newPackage }, I18n.t("events.edit.packages.new"))
       )
     )
 
@@ -136,6 +137,17 @@ class PackageEditor
         id = parseInt(cell.getAttribute("data-package-id"))
         for pkg in @packages() when pkg.id() == id
           pkg.position(position)
+
+  newPackage: (e) =>
+    preventDefault(e)
+    pkg = new App.Models.Package
+    App.Components.Dialog.show(App.Components.EditPackage, { package: pkg })
+
+  @controller: (options = {}) =>
+    new this(options)
+
+  @view: (controller) ->
+    controller.view()
 
 class LimitEditor
   constructor: (options = {}) ->
@@ -251,10 +263,3 @@ preventDefault = (e) ->
     e.preventDefault()
   else
     e.returnValue = false
-
-App.Components.PackageEditor =
-  controller: (options = {}) ->
-    new PackageEditor(options)
-
-  view: (controller) ->
-    controller.view()

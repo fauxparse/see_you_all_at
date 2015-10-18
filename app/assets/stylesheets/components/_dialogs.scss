@@ -1,0 +1,17 @@
+.dialog {
+  @include position(fixed, 0rem 0rem 0rem 0rem);
+
+}
+
+.dialog-scrim {
+  @include position(fixed, 0rem 0rem 0rem 0rem);
+  background: dark-scrim-color();
+  opacity: 0;
+  pointer-events: none;
+  @include smooth-transition;
+
+  .dialog.in & {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
